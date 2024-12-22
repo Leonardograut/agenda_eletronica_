@@ -1,17 +1,12 @@
 package com.projeto.jwt.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.projeto.jwt.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.LockMode;
-import org.hibernate.engine.internal.AbstractEntityEntry;
-import org.hibernate.engine.spi.PersistenceContext;
-import org.hibernate.engine.spi.Status;
-import org.hibernate.persister.entity.EntityPersister;
-
 import java.time.LocalDateTime;
 
 @Getter
@@ -41,9 +36,8 @@ public class Atividades {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private int QtdViews;
 
 
-    public enum Status {
-        PENDENTE, CONCLUIDA, CANCELADA;
-    }
+
 }

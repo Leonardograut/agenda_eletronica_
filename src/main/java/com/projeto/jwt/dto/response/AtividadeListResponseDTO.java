@@ -1,27 +1,24 @@
-package com.projeto.jwt.dto.request;
+package com.projeto.jwt.dto.response;
 
 import com.projeto.jwt.enums.Status;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AtividadesRequestDTO {
+public class AtividadeListResponseDTO {
 
-    @Column(name = "nome",nullable = false,columnDefinition = "VARCHAR(100)")
+    private Long id;
+
     private String nome;
 
-    @Column(name = "descricao",nullable = false,columnDefinition = "VARCHAR(255)")
     private String descricao;
-
 
     private LocalDateTime dataHoraInicio;
 
@@ -29,4 +26,6 @@ public class AtividadesRequestDTO {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private int QtdViews;
 }

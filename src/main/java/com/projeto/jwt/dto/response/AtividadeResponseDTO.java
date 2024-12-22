@@ -1,6 +1,6 @@
 package com.projeto.jwt.dto.response;
 
-import com.projeto.jwt.model.Atividades;
+import com.projeto.jwt.enums.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -25,6 +25,7 @@ public class AtividadeResponseDTO {
     private LocalDateTime dataHoraTermino;
 
     @Enumerated(EnumType.STRING)
-    private Atividades.Status status;
+    private Status status;
+
 
 }
