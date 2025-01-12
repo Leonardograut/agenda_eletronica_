@@ -4,7 +4,6 @@ import com.projeto.jwt.dto.request.AtividadesRequestDTO;
 import com.projeto.jwt.dto.response.AtividadeListResponseDTO;
 import com.projeto.jwt.dto.response.AtividadeResponseDTO;
 import com.projeto.jwt.enums.Status;
-import com.projeto.jwt.model.Atividades;
 import com.projeto.jwt.service.AtividadeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Enumeration;
 import java.util.List;
 
 @RestController
@@ -24,9 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AtividadesController {
 
-
     private final AtividadeService atividadeService;
-
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AtividadeResponseDTO> created(@RequestBody @Valid AtividadesRequestDTO atividades){

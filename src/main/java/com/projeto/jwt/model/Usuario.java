@@ -3,9 +3,6 @@ package com.projeto.jwt.model;
 import com.projeto.jwt.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +10,11 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
 
-@Entity(name = "usuarios")
+@Entity
 @Table(name = "usuarios")
 @Getter
 @Setter
@@ -28,15 +24,21 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Long id;
 
+
+    @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(255)")
     private  String nome;
 
     @Email(message = "Formato de email inválido")
+    @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)" , unique = true)
     private String email;
 
+    @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(100)")
     private String password;
 
+    @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

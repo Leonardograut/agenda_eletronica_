@@ -10,7 +10,6 @@ import com.projeto.jwt.repository.AtividadeRepository;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +38,6 @@ public class AtividadeService {
 
     public Page<AtividadeResponseDTO> find(Pageable paginacao) {
 
-
         if (paginacao == null || paginacao.getPageNumber() < 0 || paginacao.getPageSize() <= 0) {
             throw new IllegalArgumentException("Paginação inválida!");
         }
@@ -50,7 +48,6 @@ public class AtividadeService {
     }
 
     public AtividadeListResponseDTO readById(Long id) {
-
 
         final Atividades record = atividadeRepository.findById(id)
                 .orElseThrow(() -> new AtividadesNotFoundException("Atividade nao encontrada"));
@@ -66,6 +63,10 @@ public class AtividadeService {
 
         return atividadeRepository.findById(id)
                 .map(p -> {
+                    if (atividades.getStatus() == Status.CONCLUIDA || atividades.getStatus() == Status.CANCELADA) {
+
+                        throw new AtividadesNotFoundException( "A atividade não pode ser atualizada porque já foi concluída ou cancelada.");
+                    }
                     p.setNome(atividades.getNome());
                     p.setDescricao(atividades.getDescricao());
                     p.setDataHoraInicio(atividades.getDataHoraInicio());

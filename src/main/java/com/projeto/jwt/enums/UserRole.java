@@ -2,7 +2,7 @@ package com.projeto.jwt.enums;
 
 public enum UserRole {
 
-    USER("user");
+    USER("USER");
 
     private String role;
 

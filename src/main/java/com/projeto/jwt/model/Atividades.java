@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "atividades")
 public class Atividades {
 
 
@@ -28,14 +29,19 @@ public class Atividades {
     private String descricao;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
+    @Column(name = "data_hora_inicio")
     private LocalDateTime dataHoraInicio;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
+    @JsonFormat( pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
+    @Column(name = "data_hora_termino")
     private LocalDateTime dataHoraTermino;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false , length = 50)
     private Status status;
 
+
+    @Column(name = "qtd_views")
     private int QtdViews;
 
 

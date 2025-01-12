@@ -1,5 +1,6 @@
 package com.projeto.jwt.controller;
 
+import com.projeto.jwt.config.TokenService;
 import com.projeto.jwt.dto.userDTO.AuthenticationRequestDTO;
 import com.projeto.jwt.dto.userDTO.RegisterDTO;
 import com.projeto.jwt.model.Usuario;
@@ -28,6 +29,8 @@ public class AuthenticationController {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final TokenService tokenService;
+
 
     @PostMapping ("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO usuario){
@@ -36,7 +39,9 @@ public class AuthenticationController {
 
             final Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+            final String token = tokenService.gerarToken((Usuario) auth.getPrincipal());
+
+            return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @PostMapping ("/register")
