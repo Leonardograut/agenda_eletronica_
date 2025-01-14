@@ -1,9 +1,5 @@
 package com.projeto.jwt.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
 public enum Status {
 
      PENDENTE("PENDENTE"),

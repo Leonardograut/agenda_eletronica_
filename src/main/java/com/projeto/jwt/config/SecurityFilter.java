@@ -1,5 +1,6 @@
 package com.projeto.jwt.config;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.projeto.jwt.model.Usuario;
 import com.projeto.jwt.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
@@ -29,35 +30,30 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-       final String token = this.recordToken(request);
+        final String token = this.recordToken(request);
 
-       if (token != null){
+        Optional.ofNullable(token).ifPresent(t -> {
+            Optional<String> subject = tokenService.validateToken(t);
 
-           Optional<String> subject  = tokenService.validateToken(token);
-
-            if (subject.isPresent()){
-
-                final String email = subject.get();
-
+            subject.ifPresent(email -> {
                 UserDetails user = usuarioRepository.findByEmail(email)
-                        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado para o e-mail: " + subject));
 
+                        .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado para o e-mail: " + email));
 
-                final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
+                final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-            }
-       }
-       filterChain.doFilter(request,response);
+            });
+        });
+
+        filterChain.doFilter(request, response);
     }
 
     private String  recordToken(HttpServletRequest request){
         final String authorization = request.getHeader("Authorization");
-        if (authorization == null){
-            return null;
-        }
-        return authorization.replace("Bearer ","");
 
-    }
+        return Optional.ofNullable(authorization)
+                .map(auth -> auth.replace("Bearer ","")).orElse("");
+   }
 }
