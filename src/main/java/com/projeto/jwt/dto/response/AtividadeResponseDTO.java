@@ -1,12 +1,10 @@
 package com.projeto.jwt.dto.response;
-
 import com.projeto.jwt.enums.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -26,6 +24,8 @@ public class AtividadeResponseDTO {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    private Long id_usuario;
 
 
 }

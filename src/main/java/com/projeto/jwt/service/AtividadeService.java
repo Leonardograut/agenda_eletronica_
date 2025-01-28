@@ -6,16 +6,17 @@ import com.projeto.jwt.dto.response.AtividadeResponseDTO;
 import com.projeto.jwt.enums.Status;
 import com.projeto.jwt.exceptions.AtividadesNotFoundException;
 import com.projeto.jwt.model.Atividades;
+import com.projeto.jwt.model.Usuario;
 import com.projeto.jwt.repository.AtividadeRepository;
-
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -26,13 +27,25 @@ public class AtividadeService {
 
     private final ModelMapper mapper = new ModelMapper();
 
-    public AtividadeResponseDTO create(AtividadesRequestDTO atividades  ) {
+    public AtividadeResponseDTO create(AtividadesRequestDTO atividades , Usuario usuario) throws UserPrincipalNotFoundException {
 
-       Atividades atividades1 = mapper.map(atividades,Atividades.class);
+        // Criar a atividade
+        Atividades atv = new Atividades();
+        atv.setNome(atividades.getNome());
+        atv.setDescricao(atividades.getDescricao());
+        atv.setDataHoraInicio(atividades.getDataHoraInicio());
+        atv.setDataHoraTermino(atividades.getDataHoraTermino());
+        atv.setStatus(atividades.getStatus());
+        atv.setUsuario(usuario);
 
-        atividadeRepository.save(atividades1);
+        // Salvar a atividade
+        atividadeRepository.save(atv);
 
-        return mapper.map(atividades1,AtividadeResponseDTO.class);
+        // Retornar a resposta com o ID do usuário
+        AtividadeResponseDTO responseDTO = mapper.map(atv, AtividadeResponseDTO.class);
+        responseDTO.setId_usuario(usuario.getId()); // Adiciona o ID do usuário na resposta
+
+        return responseDTO;
 
     }
 

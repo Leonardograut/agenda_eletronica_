@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -41,6 +42,10 @@ public class Usuario implements UserDetails {
     @Column(name = "user_role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+
+    @OneToMany(mappedBy = "usuario" , fetch = FetchType.LAZY ,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Atividades> atividades ;
 
     public Usuario(String nome,String email, String password, UserRole role){
         this.nome = nome;

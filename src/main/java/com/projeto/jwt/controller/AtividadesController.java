@@ -4,6 +4,7 @@ import com.projeto.jwt.dto.request.AtividadesRequestDTO;
 import com.projeto.jwt.dto.response.AtividadeListResponseDTO;
 import com.projeto.jwt.dto.response.AtividadeResponseDTO;
 import com.projeto.jwt.enums.Status;
+import com.projeto.jwt.model.Usuario;
 import com.projeto.jwt.service.AtividadeService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -13,8 +14,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @RestController
@@ -24,9 +27,10 @@ public class AtividadesController {
 
     private final AtividadeService atividadeService;
 
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AtividadeResponseDTO> created(@RequestBody @Valid AtividadesRequestDTO atividades){
-        final  AtividadeResponseDTO responseDTO = atividadeService.create(atividades);
+    public ResponseEntity<AtividadeResponseDTO> created(@RequestBody @Valid AtividadesRequestDTO atividades, @AuthenticationPrincipal Usuario usuario) throws UserPrincipalNotFoundException {
+        final  AtividadeResponseDTO responseDTO = atividadeService.create(atividades,usuario);
         return ResponseEntity.ok(responseDTO);
     }
 

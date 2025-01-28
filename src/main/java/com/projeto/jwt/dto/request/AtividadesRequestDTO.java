@@ -1,5 +1,4 @@
 package com.projeto.jwt.dto.request;
-
 import com.projeto.jwt.enums.Status;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
@@ -29,4 +28,6 @@ public class AtividadesRequestDTO {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+
 }

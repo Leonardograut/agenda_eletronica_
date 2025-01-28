@@ -32,7 +32,7 @@ public class Atividades {
     @Column(name = "data_hora_inicio")
     private LocalDateTime dataHoraInicio;
 
-    @JsonFormat( pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS")
     @Column(name = "data_hora_termino")
     private LocalDateTime dataHoraTermino;
 
@@ -40,10 +40,13 @@ public class Atividades {
     @Column(name = "status", nullable = false , length = 50)
     private Status status;
 
-
     @Column(name = "qtd_views")
     private int QtdViews;
 
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario" , foreignKey = @ForeignKey(name = "fk_atividades_usuarios"))
+    private Usuario usuario;
 
 
 }
