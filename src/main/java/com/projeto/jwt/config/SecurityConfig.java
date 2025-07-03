@@ -1,6 +1,8 @@
 package com.projeto.jwt.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,10 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
+@SecurityScheme(name = SecurityConfig.SECURITY,type = SecuritySchemeType.HTTP,bearerFormat = "JWT", scheme="bearer")
 public class SecurityConfig {
 
-    @Autowired
-    private SecurityFilter securityFilter;
+    private final SecurityFilter securityFilter;
+
+    public static final String SECURITY = "bearerAuth";
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

@@ -1,5 +1,4 @@
 package com.projeto.jwt.controller;
-
 import com.projeto.jwt.config.TokenService;
 import com.projeto.jwt.dto.userDTO.AuthenticationRequestDTO;
 import com.projeto.jwt.dto.userDTO.RegisterDTO;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Optional;
 
 @RestController

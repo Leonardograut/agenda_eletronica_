@@ -3,20 +3,16 @@ package com.projeto.jwt.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projeto.jwt.enums.Status;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "atividades")
 public class Atividades {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +39,7 @@ public class Atividades {
     @Column(name = "qtd_views")
     private int QtdViews;
 
-
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario" , foreignKey = @ForeignKey(name = "fk_atividades_usuarios"))
     private Usuario usuario;
 

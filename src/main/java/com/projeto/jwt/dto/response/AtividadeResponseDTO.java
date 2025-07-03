@@ -25,7 +25,7 @@ public class AtividadeResponseDTO {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private Long id_usuario;
+    private Long idUsuario;
 
 
 }

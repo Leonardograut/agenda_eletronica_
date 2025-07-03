@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private Long id;
+    private Long idUsuario;
 
 
     @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(255)")

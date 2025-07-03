@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
@@ -25,25 +27,23 @@ public class AtividadeService {
 
     private AtividadeRepository atividadeRepository;
 
-    private final ModelMapper mapper = new ModelMapper();
+    private final ModelMapper mapper;
 
     public AtividadeResponseDTO create(AtividadesRequestDTO atividades , Usuario usuario) throws UserPrincipalNotFoundException {
 
-        // Criar a atividade
         Atividades atv = new Atividades();
         atv.setNome(atividades.getNome());
         atv.setDescricao(atividades.getDescricao());
         atv.setDataHoraInicio(atividades.getDataHoraInicio());
         atv.setDataHoraTermino(atividades.getDataHoraTermino());
-        atv.setStatus(atividades.getStatus());
+        atv.setStatus(Status.PENDENTE);
         atv.setUsuario(usuario);
 
-        // Salvar a atividade
+        
         atividadeRepository.save(atv);
 
-        // Retornar a resposta com o ID do usuário
         AtividadeResponseDTO responseDTO = mapper.map(atv, AtividadeResponseDTO.class);
-        responseDTO.setId_usuario(usuario.getId()); // Adiciona o ID do usuário na resposta
+        responseDTO.setIdUsuario(usuario.getIdUsuario());
 
         return responseDTO;
 
